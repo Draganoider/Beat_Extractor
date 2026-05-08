@@ -8,3 +8,4 @@ if not exist "%PYTHON%" (
 )
 "%PYTHON%" -m beat_extractor.cli_generate %*
 exit /b %ERRORLEVEL%
+

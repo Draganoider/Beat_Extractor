@@ -1,6 +1,6 @@
-"""Automatic rhythm-game beatmap extraction."""
+"""Tap-trained beatmap AI demo."""
 
-from beat_extractor.generator import generate_beatmap, generate_beatmap_from_audio
+from beat_extractor.ai_generator import generate_ai_beatmap
 
-__all__ = ["generate_beatmap", "generate_beatmap_from_audio"]
+__all__ = ["generate_ai_beatmap"]
 

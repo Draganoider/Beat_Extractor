@@ -25,5 +25,5 @@ if ($MinSpacing) {
     $CliArgs += @("--min-spacing", $MinSpacing)
 }
 
-& $Python -m beat_extractor.cli @CliArgs
+& $Python -m beat_extractor.cli_generate @CliArgs
 exit $LASTEXITCODE

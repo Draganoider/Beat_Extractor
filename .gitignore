@@ -8,4 +8,6 @@ data/uploads/
 data/beatmaps/
 data/ratings/
 data/tmp/
-
+data/training/
+data/models/
+beat_extractor.egg-info/

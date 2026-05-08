@@ -10,8 +10,10 @@ readme = "README.md"
 requires-python = ">=3.12,<3.14"
 dependencies = [
     "librosa>=0.11.0",
+    "joblib>=1.4",
     "numpy>=1.26",
     "pandas>=2.2",
+    "scikit-learn>=1.5",
     "scipy>=1.11",
     "soundfile>=0.12",
     "streamlit>=1.45",
@@ -23,12 +25,13 @@ dev = [
 ]
 
 [project.scripts]
-beat-extractor = "beat_extractor.cli:main"
+beat-extractor = "beat_extractor.cli_generate:main"
+beat-extractor-train = "beat_extractor.cli_train:main"
+auto-determining = "auto_determining.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["beat_extractor*"]
+include = ["beat_extractor*", "auto_determining*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-
