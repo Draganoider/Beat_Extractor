@@ -1,0 +1,2 @@
+[console_scripts]
+beat-extractor = beat_extractor.cli:main
