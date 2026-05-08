@@ -11,6 +11,7 @@ TMP_DIR = DATA_DIR / "tmp"
 TRAINING_DIR = DATA_DIR / "training"
 PROFILE_DIR = TRAINING_DIR / "profiles"
 TAKES_DIR = TRAINING_DIR / "takes"
+CONTRIBUTIONS_DIR = DATA_DIR / "contributions"
 MODELS_DIR = DATA_DIR / "models"
 MODEL_RUNS_DIR = MODELS_DIR / "runs"
 MODEL_INDEX_PATH = MODELS_DIR / "current_model.json"
@@ -19,7 +20,7 @@ USER_ID = "local_user"
 
 
 def ensure_data_dirs() -> None:
-    for path in (UPLOAD_DIR, BEATMAP_DIR, TMP_DIR, TRAINING_DIR, PROFILE_DIR, TAKES_DIR, MODELS_DIR, MODEL_RUNS_DIR):
+    for path in (UPLOAD_DIR, BEATMAP_DIR, TMP_DIR, TRAINING_DIR, PROFILE_DIR, TAKES_DIR, CONTRIBUTIONS_DIR, MODELS_DIR, MODEL_RUNS_DIR):
         path.mkdir(parents=True, exist_ok=True)
 
 

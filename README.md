@@ -4,6 +4,16 @@ Local tap-trained beatmap AI demo for rhythm-game timing. The current app focuse
 
 ## Setup
 
+For friends, the easiest path is to download/extract the project and double-click:
+
+```powershell
+START_HERE.cmd
+```
+
+That creates the local environment, installs dependencies, and starts the app.
+
+Manual setup:
+
 ```powershell
 scripts\setup.cmd
 ```
@@ -25,6 +35,26 @@ Workflow:
 7. Generate an AI beatmap and preview it with ticks.
 
 Training data is stored locally under ignored `data/training/`. Every trained model is saved as a versioned run under `data/models/runs/`, and `data/models/current_model.json` points to the active model used for generation.
+
+## Friend Contributions
+
+Friends should not send the whole `data/` folder. It contains temp previews, local models, and machine-specific files.
+
+Instead, they should export a contribution bundle from the app's `Share` tab or run:
+
+```powershell
+scripts\export_contribution.cmd --contributor "friend_name"
+```
+
+The bundle is saved under `data/contributions/` and includes approved tap takes plus the referenced song files. They can send you that `.zip`.
+
+You import a friend's bundle with the app's `Share` tab or:
+
+```powershell
+scripts\import_contribution.cmd "path\to\bundle.contribution.zip"
+```
+
+Then train a new local model.
 
 ## Commands
 

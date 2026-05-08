@@ -12,6 +12,7 @@ from auto_determining.schema import validate_beatmap
 
 from beat_extractor.ai_generator import beatmap_from_cleaned_events, generate_ai_beatmap
 from beat_extractor.components import tap_recorder
+from beat_extractor.contributions import export_contribution_bundle, import_contribution_bundle
 from beat_extractor.media import audio_data_url
 from beat_extractor.ml import list_model_runs, set_active_model, train_ranker_from_storage
 from beat_extractor.paths import BEATMAP_DIR, MODEL_INDEX_PATH, TMP_DIR, UPLOAD_DIR, ensure_data_dirs
@@ -85,8 +86,8 @@ def main() -> None:
     if audio_path is not None:
         st.audio(str(audio_path))
 
-    calibrate_tab, record_tab, review_tab, train_tab, generate_tab = st.tabs(
-        ["Calibrate", "Record", "Review", "Train", "Generate"]
+    calibrate_tab, record_tab, review_tab, train_tab, generate_tab, share_tab = st.tabs(
+        ["Calibrate", "Record", "Review", "Train", "Generate", "Share"]
     )
 
     with calibrate_tab:
@@ -250,6 +251,44 @@ def main() -> None:
                     atomic_write_json(output_path, beatmap)
                     st.success(f"Saved {output_path}")
                 st.download_button("Download JSON", payload, file_name=output_path.name, mime="application/json")
+
+    with share_tab:
+        st.subheader("Share contribution bundles")
+        st.caption("Send bundles instead of the whole data folder. Bundles include approved takes and the song files those takes reference.")
+        contributor_id = st.text_input("Contributor name", value="friend")
+        include_rejected = st.checkbox("Include rejected takes")
+        if st.button("Export my contribution bundle", type="primary"):
+            try:
+                bundle_path = export_contribution_bundle(
+                    contributor_id=contributor_id,
+                    include_rejected=include_rejected,
+                )
+            except ValueError as error:
+                st.error(str(error))
+            else:
+                st.session_state.exported_contribution_bundle = str(bundle_path)
+                st.success(f"Exported {bundle_path}")
+        exported_bundle = st.session_state.get("exported_contribution_bundle")
+        if exported_bundle and Path(exported_bundle).exists():
+            st.download_button(
+                "Download contribution bundle",
+                Path(exported_bundle).read_bytes(),
+                file_name=Path(exported_bundle).name,
+                mime="application/zip",
+            )
+
+        st.divider()
+        uploaded_bundle = st.file_uploader("Import contribution bundle", type=["zip"])
+        if uploaded_bundle is not None and st.button("Import bundle"):
+            bundle_path = TMP_DIR / uploaded_bundle.name
+            bundle_path.write_bytes(uploaded_bundle.getvalue())
+            try:
+                stats = import_contribution_bundle(bundle_path)
+            except Exception as error:
+                st.error(str(error))
+            else:
+                st.success("Bundle imported.")
+                st.json(stats)
 
 
 def _duration_from_audio(audio_path: Path) -> float:

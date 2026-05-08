@@ -12,12 +12,20 @@ function Get-BeatExtractorPython {
     $Candidates = @(
         (Join-Path $env:LOCALAPPDATA "Programs\Python\Python312\python.exe"),
         "C:\Python312\python.exe",
-        "C:\Program Files\Python312\python.exe"
+        "C:\Program Files\Python312\python.exe",
+        (Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps\python3.12.exe"),
+        (Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps\python.exe")
     )
 
     foreach ($Candidate in $Candidates) {
         if (Test-Path $Candidate) {
-            return $Candidate
+            try {
+                & $Candidate --version *> $null
+                if ($LASTEXITCODE -eq 0) {
+                    return $Candidate
+                }
+            } catch {
+            }
         }
     }
 
@@ -29,6 +37,13 @@ function Get-BeatExtractorPython {
     } catch {
     }
 
-    throw "Python 3.12 is missing or only available as a blocked Store alias. Install Python 3.12 from python.org, then rerun this command."
-}
+    try {
+        python --version *> $null
+        if ($LASTEXITCODE -eq 0) {
+            return "python"
+        }
+    } catch {
+    }
 
+    throw "Python 3.12 is missing or blocked. Install Python 3.12 from the Microsoft Store or python.org, then rerun this command."
+}

@@ -27,6 +27,7 @@ dev = [
 [project.scripts]
 beat-extractor = "beat_extractor.cli_generate:main"
 beat-extractor-train = "beat_extractor.cli_train:main"
+beat-extractor-contribution = "beat_extractor.cli_contribution:main"
 auto-determining = "auto_determining.cli:main"
 
 [tool.setuptools.packages.find]
