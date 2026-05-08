@@ -24,7 +24,7 @@ Workflow:
 6. Train the local model.
 7. Generate an AI beatmap and preview it with ticks.
 
-Training data and models are stored locally under ignored `data/training/` and `data/models/`.
+Training data is stored locally under ignored `data/training/`. Every trained model is saved as a versioned run under `data/models/runs/`, and `data/models/current_model.json` points to the active model used for generation.
 
 ## Commands
 
@@ -59,4 +59,3 @@ scripts\test.cmd
 ```
 
 The `.cmd` wrappers run the PowerShell scripts with a one-off execution-policy bypass.
-

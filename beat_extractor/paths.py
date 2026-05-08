@@ -12,15 +12,16 @@ TRAINING_DIR = DATA_DIR / "training"
 PROFILE_DIR = TRAINING_DIR / "profiles"
 TAKES_DIR = TRAINING_DIR / "takes"
 MODELS_DIR = DATA_DIR / "models"
-MODEL_PATH = MODELS_DIR / "local_ranker.joblib"
+MODEL_RUNS_DIR = MODELS_DIR / "runs"
+MODEL_INDEX_PATH = MODELS_DIR / "current_model.json"
+MODEL_PATH = MODEL_INDEX_PATH
 USER_ID = "local_user"
 
 
 def ensure_data_dirs() -> None:
-    for path in (UPLOAD_DIR, BEATMAP_DIR, TMP_DIR, TRAINING_DIR, PROFILE_DIR, TAKES_DIR, MODELS_DIR):
+    for path in (UPLOAD_DIR, BEATMAP_DIR, TMP_DIR, TRAINING_DIR, PROFILE_DIR, TAKES_DIR, MODELS_DIR, MODEL_RUNS_DIR):
         path.mkdir(parents=True, exist_ok=True)
 
 
 def profile_path(user_id: str = USER_ID) -> Path:
     return PROFILE_DIR / f"{user_id}.json"
-

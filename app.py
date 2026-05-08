@@ -13,8 +13,8 @@ from auto_determining.schema import validate_beatmap
 from beat_extractor.ai_generator import beatmap_from_cleaned_events, generate_ai_beatmap
 from beat_extractor.components import tap_recorder
 from beat_extractor.media import audio_data_url
-from beat_extractor.ml import train_ranker_from_storage
-from beat_extractor.paths import BEATMAP_DIR, MODEL_PATH, TMP_DIR, UPLOAD_DIR, ensure_data_dirs
+from beat_extractor.ml import list_model_runs, set_active_model, train_ranker_from_storage
+from beat_extractor.paths import BEATMAP_DIR, MODEL_INDEX_PATH, TMP_DIR, UPLOAD_DIR, ensure_data_dirs
 from beat_extractor.storage import build_training_take, iter_training_takes, load_profile, save_profile, save_training_take
 from beat_extractor.taps import calibration_is_ready, clean_taps, estimate_calibration
 
@@ -184,16 +184,40 @@ def main() -> None:
         st.subheader("Train local ranker")
         approved = iter_training_takes(status="approved")
         st.metric("Approved takes", len(approved))
-        if MODEL_PATH.exists():
-            st.success(f"Model exists: {MODEL_PATH}")
+        model_runs = list_model_runs()
+        if MODEL_INDEX_PATH.exists():
+            st.success(f"Active model pointer exists: {MODEL_INDEX_PATH}")
         if st.button("Train model", type="primary"):
             try:
                 stats = train_ranker_from_storage()
             except ValueError as error:
                 st.error(str(error))
             else:
-                st.success(f"Trained model with {stats['rows']} rows.")
+                st.success(f"Trained model run {stats['run_id']} with {stats['rows']} rows.")
                 st.json(stats)
+                st.rerun()
+        if model_runs:
+            st.write("Model history")
+            history = pd.DataFrame(
+                [
+                    {
+                        "active": run.get("active", False),
+                        "run_id": run["run_id"],
+                        "rows": run["rows"],
+                        "positives": run["positives"],
+                        "negatives": run["negatives"],
+                        "accuracy": round(float(run["train_accuracy"]), 4),
+                        "created_at": run["created_at"],
+                    }
+                    for run in model_runs
+                ]
+            )
+            st.dataframe(history, hide_index=True, use_container_width=True)
+            selected_run = st.selectbox("Model run", [run["run_id"] for run in model_runs])
+            if st.button("Activate selected model"):
+                activated = set_active_model(selected_run)
+                st.success(f"Activated {activated['run_id']}")
+                st.rerun()
 
     with generate_tab:
         st.subheader("Generate with trained AI")
@@ -240,4 +264,3 @@ def _format_latency(value) -> str:
 
 if __name__ == "__main__":
     main()
-
