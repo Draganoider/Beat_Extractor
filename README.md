@@ -1,30 +1,56 @@
 # Beat Extractor
 
-Automatic beatmap extraction prototype for rhythm games. The first version turns a song into an engine-neutral JSON file containing timed hit events with strength and confidence values.
+Local tap-trained beatmap AI demo for rhythm-game timing. The current app focuses on collecting calibrated human taps, approving good takes, training a local ML ranker, and generating `beatmap-v1` JSON for game integration.
 
 ## Setup
-
-Install Python 3.12 from python.org, then run:
 
 ```powershell
 scripts\setup.cmd
 ```
 
-This creates `.venv` and installs the project dependencies.
-
-## Generate a Beatmap
-
-```powershell
-scripts\analyze.cmd "path\to\song.mp3" --out "data\beatmaps\song.beatmap.json"
-```
-
-## Preview and Edit
+## Run The Tap Training App
 
 ```powershell
 scripts\run_ui.cmd
 ```
 
-The local Streamlit app can upload/select songs, generate markers, render a tick-overlay audio preview, edit event timing/enabled state, save JSON, and store a quality rating for later tuning.
+Workflow:
+
+1. Choose or upload a song.
+2. Calibrate both Space and mouse latency.
+3. Record a tap take using Space and/or mouse.
+4. Review the click-overlay preview.
+5. Approve the take.
+6. Train the local model.
+7. Generate an AI beatmap and preview it with ticks.
+
+Training data and models are stored locally under ignored `data/training/` and `data/models/`.
+
+## Commands
+
+Generate with trained AI, falling back to the automatic detector when no model exists:
+
+```powershell
+scripts\generate_ai.cmd "path\to\song.mp3" --out "data\beatmaps\song.beatmap.json"
+```
+
+Train from approved local takes:
+
+```powershell
+scripts\train_model.cmd
+```
+
+Run the old deterministic detector UI:
+
+```powershell
+scripts\run_auto_determining.cmd
+```
+
+Run the old deterministic detector CLI:
+
+```powershell
+scripts\analyze_auto.cmd "path\to\song.mp3" --out "data\beatmaps\song.auto.beatmap.json"
+```
 
 ## Test
 
@@ -32,8 +58,5 @@ The local Streamlit app can upload/select songs, generate markers, render a tick
 scripts\test.cmd
 ```
 
-The `.cmd` wrappers run the PowerShell scripts with a one-off execution-policy bypass. If you prefer direct PowerShell, use `powershell -ExecutionPolicy Bypass -File scripts\setup.ps1`.
+The `.cmd` wrappers run the PowerShell scripts with a one-off execution-policy bypass.
 
-## Notes
-
-The required v1 stack is commercial-friendly and Windows-friendly. Research-grade or license-sensitive backends such as Essentia, madmom, or stem-separation models can be added later as optional plugins, not as required runtime dependencies.
