@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import hashlib
 import json
@@ -29,4 +29,5 @@ def atomic_write_json(path: str | Path, payload: dict) -> None:
 def safe_filename(name: str) -> str:
     name = re.sub(r"[^A-Za-z0-9._-]+", "_", name.strip())
     return name or "song"
+
 

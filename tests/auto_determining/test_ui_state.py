@@ -1,12 +1,12 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import importlib
 
-from beat_extractor.ui_state import events_from_editor, events_to_editor_rows
+from auto_determining.ui_state import events_from_editor, events_to_editor_rows
 
 
 def test_app_imports_cleanly() -> None:
-    importlib.import_module("app")
+    importlib.import_module("auto_determining_app")
 
 
 def test_editor_roundtrip_preserves_user_edits() -> None:
@@ -30,4 +30,5 @@ def test_editor_roundtrip_preserves_user_edits() -> None:
     assert exported[0]["time_sec"] == 1.25
     assert exported[0]["edited"] is True
     assert exported[0]["id"] == "evt_000001"
+
 

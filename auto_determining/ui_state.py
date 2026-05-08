@@ -1,10 +1,10 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from typing import Iterable
 
 import pandas as pd
 
-from beat_extractor.models import event_id
+from auto_determining.models import event_id
 
 
 def events_to_editor_rows(events: Iterable[dict]) -> pd.DataFrame:
@@ -63,4 +63,5 @@ def _clamp_float(value, low: float, high: float) -> float:
     except (TypeError, ValueError):
         number = low
     return max(low, min(high, number))
+
 

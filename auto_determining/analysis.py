@@ -1,11 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass
 
 import numpy as np
 from scipy.signal import find_peaks
 
-from beat_extractor.audio import AudioData
+from auto_determining.audio import AudioData
 
 
 HOP_LENGTH = 512
@@ -261,4 +261,5 @@ def _frame_step(frame_times: np.ndarray) -> float:
     if frame_times.size < 2:
         return HOP_LENGTH / 22050.0
     return max(1e-6, float(np.median(np.diff(frame_times))))
+
 

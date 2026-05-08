@@ -1,10 +1,10 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass
 
 import numpy as np
 
-from beat_extractor.analysis import AudioFeatures, nearest_distance, value_at_time
+from auto_determining.analysis import AudioFeatures, nearest_distance, value_at_time
 
 
 SOURCE_PRIORITY = {
@@ -156,3 +156,4 @@ def _score_threshold(candidates: list[CandidateEvent]) -> float:
     if scores.size == 0:
         return 1.0
     return float(min(0.55, max(0.26, np.percentile(scores, 35))))
+

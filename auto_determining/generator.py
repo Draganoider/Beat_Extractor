@@ -1,15 +1,15 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from pathlib import Path
 
 import numpy as np
 
-from beat_extractor.analysis import extract_features
-from beat_extractor.audio import audio_from_samples, load_audio
-from beat_extractor.io import sha256_file
-from beat_extractor.models import AnalysisInfo, BeatEvent, Beatmap, SourceInfo, beatmap_to_dict, event_id
-from beat_extractor.schema import validate_beatmap
-from beat_extractor.selection import build_candidates, select_events
+from auto_determining.analysis import extract_features
+from auto_determining.audio import audio_from_samples, load_audio
+from auto_determining.io import sha256_file
+from auto_determining.models import AnalysisInfo, BeatEvent, Beatmap, SourceInfo, beatmap_to_dict, event_id
+from auto_determining.schema import validate_beatmap
+from auto_determining.selection import build_candidates, select_events
 
 
 def generate_beatmap(
@@ -98,4 +98,5 @@ def _generate(
     payload = beatmap_to_dict(beatmap)
     validate_beatmap(payload)
     return payload
+
 

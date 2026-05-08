@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 
 ALLOWED_SOURCES = {"beat", "onset", "downbeat", "section"}
@@ -60,4 +60,5 @@ def _number(value, name: str) -> float:
 def _require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
 

@@ -1,7 +1,7 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-from beat_extractor.generator import generate_beatmap_from_audio
-from beat_extractor.schema import validate_beatmap
+from auto_determining.generator import generate_beatmap_from_audio
+from auto_determining.schema import validate_beatmap
 
 
 def test_generated_beatmap_schema_is_valid(click_track) -> None:
@@ -21,4 +21,5 @@ def test_events_are_sorted_stable_and_in_duration(click_track) -> None:
     assert times == sorted(times)
     assert ids == [f"evt_{index:06d}" for index in range(1, len(ids) + 1)]
     assert all(0.0 <= time <= beatmap["source"]["duration_sec"] for time in times)
+
 

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import subprocess
 from dataclasses import dataclass
@@ -71,4 +71,5 @@ def _load_audio_ffmpeg(path: Path, sample_rate: int) -> AudioData:
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     samples = np.frombuffer(result.stdout, dtype=np.float32).copy()
     return AudioData(_clean_samples(samples), sample_rate)
+
 

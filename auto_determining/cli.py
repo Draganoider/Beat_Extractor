@@ -1,10 +1,10 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 from pathlib import Path
 
-from beat_extractor.generator import generate_beatmap
-from beat_extractor.io import atomic_write_json
+from auto_determining.generator import generate_beatmap
+from auto_determining.io import atomic_write_json
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -37,4 +37,5 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

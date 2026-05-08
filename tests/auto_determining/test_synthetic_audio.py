@@ -1,8 +1,8 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import numpy as np
 
-from beat_extractor.generator import generate_beatmap_from_audio
+from auto_determining.generator import generate_beatmap_from_audio
 
 
 def test_silence_produces_no_events_and_low_confidence() -> None:
@@ -43,4 +43,5 @@ def test_dense_noise_is_capped() -> None:
 
     events_per_minute = len(beatmap["events"]) / (beatmap["source"]["duration_sec"] / 60.0)
     assert events_per_minute <= 130
+
 

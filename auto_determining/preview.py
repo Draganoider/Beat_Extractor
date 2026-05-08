@@ -1,11 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 
-from beat_extractor.audio import load_audio
+from auto_determining.audio import load_audio
 
 
 def render_click_preview(
@@ -50,4 +50,5 @@ def _make_click(sample_rate: int) -> np.ndarray:
     click = tone * envelope
     peak = float(np.max(np.abs(click))) if click.size else 1.0
     return (click / max(peak, 1e-6)).astype(np.float32)
+
 

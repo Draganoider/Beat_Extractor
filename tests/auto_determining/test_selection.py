@@ -1,9 +1,9 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import numpy as np
 
-from beat_extractor.generator import generate_beatmap_from_audio
-from beat_extractor.selection import CandidateEvent, deduplicate_candidates, select_events
+from auto_determining.generator import generate_beatmap_from_audio
+from auto_determining.selection import CandidateEvent, deduplicate_candidates, select_events
 
 
 def test_deduplication_merges_near_identical_candidates() -> None:
@@ -41,4 +41,5 @@ def test_confidence_is_lower_for_ambiguous_audio(click_track) -> None:
     weak = generate_beatmap_from_audio(sine, 22050, target_events_per_minute=150)
 
     assert strong["analysis"]["confidence"] > weak["analysis"]["confidence"]
+
 

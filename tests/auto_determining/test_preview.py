@@ -1,9 +1,9 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import numpy as np
 import soundfile as sf
 
-from beat_extractor.preview import render_click_preview
+from auto_determining.preview import render_click_preview
 
 
 def test_click_preview_renders_audible_ticks(tmp_path) -> None:
@@ -27,4 +27,5 @@ def test_click_preview_renders_audible_ticks(tmp_path) -> None:
     assert output_path.exists()
     assert rendered_rate == sample_rate
     assert float(np.max(np.abs(tick_window))) > 0.2
+
 

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass, field
 
@@ -71,4 +71,5 @@ def beatmap_to_dict(beatmap: Beatmap) -> dict:
 
 def event_id(index: int) -> str:
     return f"evt_{index:06d}"
+
 
